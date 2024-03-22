@@ -1,18 +1,18 @@
-import { useGlobalState } from "../../context/GlobalState"
+import { useGlobalState } from "../../context/GlobalState";
+import TransactionItem from "./TransactionItem";
 
 const TransactionList = () => {
+  const { transactions } = useGlobalState();
+  return (
+    <>
+      <h3 className="text-slate-300 text-xl font-bold block">Historial</h3>
+      <ul>
+        {transactions.map((transaction) => (
+          <TransactionItem key={transaction.id} transaction={transaction} />
+        ))}
+      </ul>
+    </>
+  );
+};
 
-    const {transactions, deleteTransaction} = useGlobalState();
-    return (
-    <div>{
-        transactions.map(transaction  => (
-            <div key={transaction.id}>
-                <p>{transaction.description}</p>
-                <p>{transaction.amount}</p>
-                <button onClick={() => deleteTransaction(transaction.id)}>X</button>
-            </div>
-        ))}</div>
-  )
-}
-
-export default TransactionList
+export default TransactionList;
