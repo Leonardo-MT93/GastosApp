@@ -1,8 +1,9 @@
 import { VictoryLabel, VictoryPie } from "victory";
-import { useGlobalState } from "../context/GlobalState";
+import { AppContext } from "../context/AppContext";
+import { useContext } from "react";
 
 const ExpenseChart = () => {
-  const { transactions } = useGlobalState();
+  const {transactions} = useContext(AppContext)
   const amounts = transactions.map((transaction) => transaction.amount);
 
   const totalIncome = amounts
@@ -18,14 +19,14 @@ const ExpenseChart = () => {
     <VictoryPie
       colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
       data={[
-        { x: "Rent", y: totalExpensesPercentage },
-        { x: "Food", y: totalIncomePercentage },
+        { x: "Egresos", y: totalExpensesPercentage },
+        { x: "Ingresos", y: totalIncomePercentage },
       ]}
       animate={{
         duration: 2000,
       }}
       labels={({ datum }) => `${datum.x}: $${datum.y}%`}
-      labelComponent={<VictoryLabel angle={45} style={{ fill: "white" }} />}
+      labelComponent={<VictoryLabel angle={45} style={{ fill: "white", fontSize: "10" }} />}
     />
   );
 };

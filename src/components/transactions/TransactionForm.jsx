@@ -1,11 +1,12 @@
-import { useState } from "react"
-import { useGlobalState } from "../../context/GlobalState";
+import { useContext, useState } from "react"
+import { AppContext } from "../../context/AppContext";
 
 const TransactionForm = () => {
 
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState(0);
-  const {addTransaction} = useGlobalState()
+  const {addTransaction} = useContext(AppContext)
+
 
   const onSubmit = (e) => {
 

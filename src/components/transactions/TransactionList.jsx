@@ -1,8 +1,9 @@
-import { useGlobalState } from "../../context/GlobalState";
+import { useContext } from "react";
 import TransactionItem from "./TransactionItem";
+import { AppContext } from "../../context/AppContext";
 
 const TransactionList = () => {
-  const { transactions } = useGlobalState();
+  const {transactions} = useContext(AppContext)
   return (
     <>
       <h3 className="text-slate-300 text-xl font-bold block">Historial</h3>
