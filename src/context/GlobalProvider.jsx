@@ -3,39 +3,47 @@ import { appReducer } from "./AppReducer";
 import { AppContext } from "./AppContext";
 
 const initialState = {
-  transactions: [],
+  session: localStorage.getItem("session")
+    ? JSON.parse(localStorage.getItem("session"))
+    : { users: [] },
 };
 
 export const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(appReducer, initialState, () => {
-    const localdata = localStorage.getItem("transactions");
-    return localdata ? JSON.parse(localdata) : initialState;
-  });
+  
+  const [state, dispatch] = useReducer(appReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(state)); 
-  }, [state])
+    localStorage.setItem("session", JSON.stringify(state.session)); 
+  }, [state.session])
 
-  const addTransaction = (transaction) => {
+  const addUser = (user) => {
     dispatch({
-      type: "ADD_TRANSACTION",
-      payload: transaction,
+      type: "ADD_USER",
+      payload: user,
     });
   };
 
-  const deleteTransaction = (id) => {
+  const deleteUser = (id) => {
     dispatch({
-      type: "DELETE_TRANSACTION",
+      type: "DELETE_USER",
       payload: id,
+    });
+  };
+
+  const startNewSession = () => {
+    localStorage.removeItem("session");
+    dispatch({
+      type: "START_NEW_SESSION",
     });
   };
 
   return (
     <AppContext.Provider
       value={{
-        transactions: state.transactions,
-        addTransaction,
-        deleteTransaction,
+        session: state.session,
+        addUser,
+        deleteUser,
+        startNewSession,
       }}
     >
       {children}
