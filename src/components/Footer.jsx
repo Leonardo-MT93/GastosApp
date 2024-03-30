@@ -1,33 +1,46 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+import { useGetData } from "../hooks/useGetData";
 
 const Footer = () => {
-  const [data, setData] = useState(() => {
-    const sessionData = localStorage.getItem("session");
-    return sessionData ? JSON.parse(sessionData) : [];
-  });
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const sessionData = localStorage.getItem("session");
-      setData(sessionData ? JSON.parse(sessionData) : []);
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
+  const { usersData, expenses } = useGetData();
   return (
-    <div className="w-full h-[20vh] border border-yellow-300">
-      <h1 className="text-text">
-        {data.length > 0 ? (
-          data.map((user) => <div key={user.id}>{user.name}</div>)
+    <div className="w-full h-[20vh] border border-yellow-300 flex items-center justify-around">
+      <div className="text-text w-[40%] flex flex-col items-center">
+        <h1 className="text-text">Usuarios:</h1>
+        {usersData.length > 0 ? (
+          <ul className="w-[60%]">
+            {usersData.map((user) => (
+              <li
+                className="flex justify-between items-center border-b py-2"
+                key={user.id}
+              >
+                <span>{user.name}</span>
+                <span>${user.salary}</span>
+              </li>
+            ))}
+          </ul>
         ) : (
-          "No hay usuarios"
+          <p>No hay usuarios ingresados</p>
         )}
-      </h1>
+      </div>
+      <div className="text-text w-[40%] border flex flex-col items-center">
+        <h1>Gastos:</h1>
+        {expenses.length > 0 ? (
+          <ul className="w-[60%]">
+            {expenses.map((expense) => (
+              <li
+                className="flex justify-between items-center border-b py-2"
+                key={expense.id}
+              >
+                <span>{expense.name}</span>
+                <span>${expense.expense}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No hay gastos ingresados</p>
+        )}
+      </div>
     </div>
   );
 };
