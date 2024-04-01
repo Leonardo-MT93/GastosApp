@@ -4,9 +4,8 @@ import { ExpenseContext } from "../context/ExpenseContext";
 const ExpensePage = () => {
   const [expense, setExpense] = useState("");
   const [name, setName] = useState("");
-  const [counter, setCounter] = useState(1);
   const [alert, setAlert] = useState(false);
-  const {addExpense} = useContext(ExpenseContext)
+  const {expenses, addExpense} = useContext(ExpenseContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,11 +15,12 @@ const ExpensePage = () => {
       expense,
       name,
     });
-    setExpense(0);
+
+    setExpense("");
     setName("");
-    setCounter(counter + 1);
     setAlert(true);
     setTimeout(() => {
+
       setAlert(false);
     }, 1000);
   };
@@ -34,18 +34,20 @@ const ExpensePage = () => {
       >
         <div className="w-[70%] h-24 flex items-center justify-center border border-red-200">
           <label className="text-text px-3 text-center " htmlFor="name">
-            Gastos {counter}
+            Gastos {expenses.length + 1}
           </label>
           <input
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="text"
             placeholder="Ingresa el nombre del gasto"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="number"
             placeholder="Ingresa el monto del gasto"
+            value={expense}
             onChange={(e) => setExpense(e.target.value)}
           />
           <button
@@ -58,7 +60,7 @@ const ExpensePage = () => {
       </form>
       <div className="w-full h-[10vh] flex flex-col items-center">
         <span className="text-text text-sm py-4">
-          Total de gastos: {counter -1}
+          Total de gastos: {expenses.length}
         </span>
         {alert && (
           <span className="text-green-500 text-sm py-4">

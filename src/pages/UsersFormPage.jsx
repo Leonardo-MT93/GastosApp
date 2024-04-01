@@ -4,9 +4,8 @@ import { UserContext } from "../context/UserContext";
 
 const UsersFormPage = () => {
   const [name, setName] = useState("");
-  const { addUser } = useContext(UserContext);
+  const { addUser, users } = useContext(UserContext);
   const [salary, setSalary] = useState("");
-  const [counter, setCounter] = useState(1);
   const [alert, setAlert] = useState(false);
 
   const onSubmit = (e) => {
@@ -18,8 +17,6 @@ const UsersFormPage = () => {
     });
     setName("");
     setSalary("");
-    setCounter(counter + 1);
-
     setAlert(true);
     setTimeout(() => {
       setAlert(false);
@@ -35,18 +32,20 @@ const UsersFormPage = () => {
       >
         <div className="w-[70%] h-24 flex items-center justify-center border border-red-200">
           <label className="text-text px-3 text-center " htmlFor="name">
-            Usuario {counter}
+            Usuario {users.length + 1}
           </label>
           <input
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="text"
             placeholder="Ingresa el nombre de usuario"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <input
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="number"
             placeholder="Ingresa el salario del usuario"
+            value={salary}
             onChange={(e) => setSalary(e.target.value)}
           />
           <button
@@ -59,7 +58,7 @@ const UsersFormPage = () => {
       </form>
       <div className="w-full h-[10vh] flex flex-col items-center">
         <span className="text-text text-sm py-4">
-          Total de usuarios: {counter -1}
+          Total de usuarios: {users.length }
         </span>
         {alert && (
           <span className="text-green-500 text-sm py-4">
