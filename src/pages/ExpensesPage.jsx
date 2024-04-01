@@ -1,17 +1,16 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../context/AppContext";
+import { ExpenseContext } from "../context/ExpenseContext";
 
 const ExpensePage = () => {
   const [expense, setExpense] = useState("");
   const [name, setName] = useState("");
   const [counter, setCounter] = useState(1);
   const [alert, setAlert] = useState(false);
-  const {addExpense} = useContext(AppContext)
+  const {addExpense} = useContext(ExpenseContext)
 
   const onSubmit = (e) => {
     e.preventDefault();
     if(expense === 0 || name === "") return
-    console.log(expense, name)
     addExpense({
       id: window.crypto.randomUUID(),
       expense,

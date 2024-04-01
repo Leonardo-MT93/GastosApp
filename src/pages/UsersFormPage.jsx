@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../context/AppContext";
+// import { AppContext } from "../context/AppContext";
+import { UserContext } from "../context/UserContext";
 
 const UsersFormPage = () => {
   const [name, setName] = useState("");
-  const { addUser } = useContext(AppContext);
+  const { addUser } = useContext(UserContext);
   const [salary, setSalary] = useState("");
   const [counter, setCounter] = useState(1);
   const [alert, setAlert] = useState(false);
