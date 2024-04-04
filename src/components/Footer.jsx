@@ -1,65 +1,74 @@
-// import { useState, useEffect } from "react";
 import { useContext } from "react";
-// import { useGetData } from "../hooks/useGetData";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { ExpenseContext } from "../context/ExpenseContext";
 
 const Footer = () => {
-  // const { usersData, expenses } = useGetData();
-  const { users, deleteUser } = useContext(UserContext);
-  const { expenses, deleteExpense } = useContext(ExpenseContext);
+  const { users } = useContext(UserContext);
+  const { expenses } = useContext(ExpenseContext);
+  const location = useLocation();
+  console.log(location.pathname); // Esto imprimirá la URL actual en la consola
+  const isUsersEmpty = !(users && users.length > 0 && location.pathname !== "/all-users");
+  const isExpensesEmpty = !(expenses && expenses.length > 1 && location.pathname !== "/all-expenses");
+  
 
   return (
-    <div className="w-full h-[20vh] border border-yellow-300 flex items-center justify-around">
-      <div className="text-text w-[40%] flex flex-col items-center">
-        <h1 className="text-text">Usuarios:</h1>
-        {users.length > 0 ? (
-          <ul className="w-[60%]">
-            {users.map((user) => (
-              <li
-                className="flex justify-between items-center border-b py-2"
-                key={user.id}
-              >
-                <span>{user.name}</span>
-                <span>${user.salary}</span>
-                <button
-                  className="bg-red-500 rounded-full w-10"
-                  onClick={() => deleteUser(user.id)}
-                >
-                  x
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay usuarios ingresados</p>
-        )}
+    <footer
+      className="w-full border-t border-opacity-20 border-black
+    font-medium lg:text-lg sm:text-base text-text"
+    >
+      <div className="w-full flex items-center justify-evenly h-[15vh]">
+        <Link
+          to="/all-users"
+          className={`bg-buttons text-buttons-text font-bold py-2 px-4 border-b-4 border-b-buttons-border rounded ${
+            isUsersEmpty
+              ? " opacity-50 cursor-not-allowed pointer-events-none"
+              : ""
+          }`}
+        >
+          Ver usuarios
+        </Link>
+        <Link
+          to="/"
+          className='bg-buttons text-buttons-text font-bold py-2 px-4 border-b-4 border-b-buttons-border rounded'
+        >
+          Inicio
+        </Link>
+        <Link
+          to="/all-expenses"
+          className={`bg-buttons text-buttons-text font-bold py-2 px-4 border-b-4 border-b-buttons-border rounded ${
+            isExpensesEmpty
+              ? " opacity-50 cursor-not-allowed pointer-events-none"
+              : ""
+          }`}
+        >
+          Ver Gastos
+        </Link>
       </div>
-      <div className="text-text w-[40%] border flex flex-col items-center">
-        <h1>Gastos:</h1>
-        {expenses.length > 0 ? (
-          <ul className="w-[60%]">
-            {expenses.map((expense) => (
-              <li
-                className="flex justify-between items-center border-b py-2"
-                key={expense.id}
-              >
-                <span>{expense.name}</span>
-                <span>${expense.expense}</span>
-                <button
-                  className="bg-red-500 rounded-full w-10"
-                  onClick={() => deleteExpense(expense.id)}
-                >
-                  x
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay gastos ingresados</p>
-        )}
+      <div className="w-full flex flex-col items-center justify-center py-10 md:flex-row md:justify-evenly ">
+        <span>
+          {new Date().getFullYear()} &copy; Todos los derechos reservados
+        </span>
+        <div className="flex items-center">
+          Desarrollado con <span className="text-2xl px-1">&#9825;</span>
+          por&nbsp;
+          <Link
+            to="https://www.linkedin.com/in/leonardo-manuel-tolaba/"
+            className="underline  underline-offset-2"
+            target={"_blank"}
+          >
+            LeoTolaba
+          </Link>
+        </div>
+        <Link
+          className="hover:underline  underline-offset-2"
+          to="https://api.whatsapp.com/send?phone=+5401123937902&text=Hola,%20Me%20encanto%20tu%20portfolio!%20Queria%20contactarte!%20%F0%9F%92%99"
+          target={"_blank"}
+        >
+          Whatsapp
+        </Link>
       </div>
-    </div>
+    </footer>
   );
 };
 

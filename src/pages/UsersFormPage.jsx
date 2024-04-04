@@ -24,7 +24,7 @@ const UsersFormPage = () => {
   };
 
   return (
-    <div className="w-full h-[60vh] flex flex-col items-center justify-center border border-red-800">
+    <div className="w-full h-[70vh] flex flex-col items-center justify-center border border-red-800">
       <h1 className="text-text text-2xl py-4">Ingresar usuarios </h1>
       <form
         className="w-[80%] h-[40vh] flex items-center justify-center border border-red-500"
