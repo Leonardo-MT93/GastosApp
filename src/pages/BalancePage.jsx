@@ -12,6 +12,7 @@ const BalancePage = () => {
     expenses
   );
   const { formatNumber } = useNumberFormatter();
+
   return (
     <div className="w-full h-[65vh] flex flex-col items-center justify-center text-text">
       <h1 className="text-text text-2xl py-4">Balance</h1>
@@ -56,13 +57,16 @@ const BalancePage = () => {
               </p>
               <p>
                 Monto: ${" "}
-                <span className="text-green-500 border-b border-b-green-400">
-                  {(
-                    ((user.percentage * 1) / 100).toFixed(4) * totalExpenses
-                  ).toFixed(2)}
+                <span className="text-green-500 border-b border-b-green-400  font-bold">
+                  {formatNumber(((user.percentage * 1) / 100).toFixed(4) * totalExpenses)}
                 </span>{" "}
                 <span className="text-cyan-300"> ({user.name})</span>
               </p>
+              <button
+            className="bg-buttons  hover:bg-buttons-hover text-buttons-text font-bold py-2 px-4 border-b-4 border-b-buttons-border hover:border-buttons-hover rounded"
+          >
+            +
+          </button>
             </div>
           ))
         ) : (
