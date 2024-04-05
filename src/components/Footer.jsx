@@ -7,14 +7,13 @@ const Footer = () => {
   const { users } = useContext(UserContext);
   const { expenses } = useContext(ExpenseContext);
   const location = useLocation();
-  console.log(location.pathname); // Esto imprimirá la URL actual en la consola
   const isUsersEmpty = !(users && users.length > 0 && location.pathname !== "/all-users");
-  const isExpensesEmpty = !(expenses && expenses.length > 1 && location.pathname !== "/all-expenses");
+  const isExpensesEmpty = !(expenses && expenses.length > 0 && location.pathname !== "/all-expenses");
   
 
   return (
     <footer
-      className="w-full border-t border-opacity-20 border-black
+      className="w-full border-t border-t-border-line
     font-medium lg:text-lg sm:text-base text-text"
     >
       <div className="w-full flex items-center justify-evenly h-[15vh]">

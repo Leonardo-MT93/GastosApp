@@ -7,14 +7,17 @@ const UsersFormPage = () => {
   const { addUser, users } = useContext(UserContext);
   const [salary, setSalary] = useState("");
   const [alert, setAlert] = useState(false);
+  const [error, setError] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if(!name || !salary) return setError(true);
     addUser({
       id: window.crypto.randomUUID(),
       name,
       salary,
     });
+    setError(false);
     setName("");
     setSalary("");
     setAlert(true);
@@ -24,13 +27,13 @@ const UsersFormPage = () => {
   };
 
   return (
-    <div className="w-full h-[70vh] flex flex-col items-center justify-center border border-red-800">
+    <div className="w-full h-[65vh] flex flex-col items-center justify-center">
       <h1 className="text-text text-2xl py-4">Ingresar usuarios </h1>
       <form
-        className="w-[80%] h-[40vh] flex items-center justify-center border border-red-500"
+        className="w-[80%] h-[40vh] flex items-center justify-center "
         onSubmit={onSubmit}
       >
-        <div className="w-[70%] h-24 flex items-center justify-center border border-red-200">
+        <div className="w-[70%] h-24 flex items-center justify-center border border-yellow-200">
           <label className="text-text px-3 text-center " htmlFor="name">
             Usuario {users.length + 1}
           </label>
@@ -63,6 +66,11 @@ const UsersFormPage = () => {
         {alert && (
           <span className="text-green-500 text-sm py-4">
             El usuario se ha ingresado correctamente
+          </span>
+        )}
+        {error && (
+          <span className="text-red-500 text-sm py-4">
+            Por favor ingrese un nombre y un salario
           </span>
         )}
       </div>

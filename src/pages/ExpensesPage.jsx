@@ -6,10 +6,10 @@ const ExpensePage = () => {
   const [name, setName] = useState("");
   const [alert, setAlert] = useState(false);
   const {expenses, addExpense} = useContext(ExpenseContext);
-
+  const [error, setError] = useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
-    if(expense === 0 || name === "") return
+    if(expense === 0 || name === "") return setError(true);
     addExpense({
       id: window.crypto.randomUUID(),
       expense,
@@ -18,6 +18,7 @@ const ExpensePage = () => {
 
     setExpense("");
     setName("");
+    setError(false);
     setAlert(true);
     setTimeout(() => {
 
@@ -26,13 +27,13 @@ const ExpensePage = () => {
   };
 
   return (
-    <div className="w-full h-[60vh] flex flex-col items-center justify-center border border-red-800">
+    <div className="w-full h-[65vh] flex flex-col items-center justify-center">
       <h1 className="text-text text-2xl py-4">Ingresar gastos </h1>
       <form
-        className="w-[80%] h-[40vh] flex items-center justify-center border border-red-500"
+        className="w-[80%] h-[40vh] flex items-center justify-center"
         onSubmit={onSubmit}
       >
-        <div className="w-[70%] h-24 flex items-center justify-center border border-red-200">
+        <div className="w-[70%] h-24 flex items-center justify-center border border-yellow-200">
           <label className="text-text px-3 text-center " htmlFor="name">
             Gastos {expenses.length + 1}
           </label>
@@ -60,11 +61,16 @@ const ExpensePage = () => {
       </form>
       <div className="w-full h-[10vh] flex flex-col items-center">
         <span className="text-text text-sm py-4">
-          Total de gastos: {expenses.length}
+          Total de gastos ingresados: {expenses.length}
         </span>
         {alert && (
           <span className="text-green-500 text-sm py-4">
             El gasto fue ingresado correctamente
+          </span>
+        )}
+                {error && (
+          <span className="text-red-500 text-sm py-4">
+            Por favor ingrese un gasto y el monto correspondiente
           </span>
         )}
       </div>

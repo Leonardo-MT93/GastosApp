@@ -4,12 +4,17 @@ import { UserContext } from "../context/UserContext";
 import { ExpenseContext } from "../context/ExpenseContext";
 
 const HomePage = () => {
-  const { users } = useContext(UserContext);
-  const {expenses} = useContext(ExpenseContext);
+  const { users, deleteAllUsers } = useContext(UserContext);
+  const {expenses, deleteAllExpenses} = useContext(ExpenseContext);
   const isDataEmpty = !(users && users.length > 1);
-  const isExpensesEmpty = !(expenses && expenses.length > 1);
+  const isExpensesEmpty = !(expenses && expenses.length > 0);
+  const deleteUsers = () => { 
+    deleteAllExpenses();
+    deleteAllUsers();
+  }
+
   return (
-    <div className="w-full flex flex-col items-center justify-center border border-red-800 h-[70vh]">
+    <div className="w-full flex flex-col items-center justify-center  h-[65vh]">
       <h1>HomePage</h1>
       <div className="w-full flex flex-col items-center justify-evenly h-[60vh]">
         <Link
@@ -37,6 +42,16 @@ const HomePage = () => {
           }`}        >
           Ver Balance
         </Link>
+        <button
+          to="/"
+          className={`bg-red-600 text-buttons-text font-bold py-2 px-4 border-b-4 border-b-buttons-border rounded ${
+            isDataEmpty
+              ? " opacity-50 cursor-not-allowed pointer-events-none"
+              : ""
+          }`}       
+          onClick={deleteUsers}>
+          Reiniciar datos
+        </button>
       </div>
     </div>
   );

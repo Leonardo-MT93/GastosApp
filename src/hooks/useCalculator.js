@@ -1,5 +1,5 @@
 
-export const useCalculator = (users, expenses) => {
+export const useCalculator = (users = [], expenses = []) => {
   const totalSalaries = users.reduce((acc, user) => acc + user.salary * 1, 0);
 
   const totalExpenses = expenses.reduce(
