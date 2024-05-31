@@ -16,32 +16,6 @@ const ListOfExpenses = () => {
         <span className="text-text text-sm py-4">
           Cantidad de gastos ingresados: {expenses.length }
         </span>
-        {/* {expenses.length > 0 ? (
-          <ul className="w-[70%]">
-            {expenses.map((item, index) => (
-              <li
-                className="flex justify-between items-center border-b py-2"
-                key={index}
-              >
-                <span className="w-[2.5vw]  overflow-hidden whitespace-nowrap text-overflow-ellipsis">{`${index+1}_`}</span>
-                <span className="w-[25vw]  overflow-hidden whitespace-nowrap text-overflow-ellipsis ">Nombre: {item.name}</span>
-                <span className="w-[25vw]  overflow-hidden whitespace-nowrap text-overflow-ellipsis">Valor: ${formatNumber(item.expense*1)}</span>
-                <Link 
-                to={`/edit-expense/${item.id}?position=${index + 1}`}
-                className="bg-blue-500 rounded-full w-20 text-center"
-                >Editar</Link>
-                <button
-                  className="bg-red-500 rounded-full w-10"
-                  onClick={() => deleteExpense(item.id)}
-                >
-                  x
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No hay ingresos realizados</p>
-        )} */}
 
 <table className="table-auto w-[70%] border border-yellow-100">
       <thead>

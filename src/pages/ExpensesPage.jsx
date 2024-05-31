@@ -32,7 +32,6 @@ const ExpensePage = () => {
 
 
     if(id){
-      console.log(expense, name)
       editExpense(id, {expense, name});
       setTimeout(() => {
 

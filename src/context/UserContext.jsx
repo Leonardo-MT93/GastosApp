@@ -27,15 +27,22 @@ function useSessionReducer(){
         });
     }
 
-    return {state, addUser, deleteUser, deleteAllUsers};    
+    const editUser = (id, user) => {
+        dispatch({
+            type: "EDIT_USER",
+            payload: {id, user},
+        });
+    }
+
+    return {state, addUser, deleteUser, deleteAllUsers, editUser};    
 
 }
 export function UserProvider({ children }) {
 
 
-    const { state, addUser, deleteAllUsers, deleteUser} = useSessionReducer();
+    const { state, addUser, deleteAllUsers, deleteUser, editUser} = useSessionReducer();
   return (
-    <UserContext.Provider value={{ users: state, addUser, deleteAllUsers, deleteUser}}>
+    <UserContext.Provider value={{ users: state, addUser, deleteAllUsers, deleteUser, editUser}}>
       {children}
     </UserContext.Provider>
   );
