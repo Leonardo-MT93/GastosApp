@@ -1,20 +1,52 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ExpenseContext } from "../context/ExpenseContext";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const ExpensePage = () => {
   const [expense, setExpense] = useState("");
   const [name, setName] = useState("");
   const [alert, setAlert] = useState(false);
-  const {expenses, addExpense} = useContext(ExpenseContext);
+  const {expenses, addExpense, editExpense} = useContext(ExpenseContext);
   const [error, setError] = useState(false);
+  const {id} = useParams();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const position = query.get("position");
+
+  const expenseInputRef = useRef();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      const expenseToEdit = expenses.find((exp) => exp.id === id);
+      if (expenseToEdit) {
+        setExpense(expenseToEdit.expense);
+        setName(expenseToEdit.name);
+      }
+    }
+  }, [id, expenses]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     if(expense === 0 || name === "") return setError(true);
-    addExpense({
-      id: window.crypto.randomUUID(),
-      expense,
-      name,
-    });
+
+
+    if(id){
+      console.log(expense, name)
+      editExpense(id, {expense, name});
+      setTimeout(() => {
+
+        setAlert(false);
+        navigate("/all-expenses");
+      }, 1000);
+      
+    }else{
+      addExpense({
+        id: window.crypto.randomUUID(),
+        expense,
+        name,
+      });
+    }
 
     setExpense("");
     setName("");
@@ -24,6 +56,8 @@ const ExpensePage = () => {
 
       setAlert(false);
     }, 1000);
+
+    expenseInputRef.current.focus();
   };
 
   return (
@@ -35,9 +69,10 @@ const ExpensePage = () => {
       >
         <div className="w-[70%] h-24 flex items-center justify-center border border-yellow-200">
           <label className="text-text px-3 text-center " htmlFor="name">
-            Gastos {expenses.length + 1}
+          {id ? `Gasto ${position}` : `Gastos ${expenses.length + 1}`}
           </label>
           <input
+          ref={expenseInputRef}
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="text"
             placeholder="Ingresa el nombre del gasto"

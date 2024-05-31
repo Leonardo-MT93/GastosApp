@@ -22,7 +22,7 @@ const BalancePage = () => {
         {usersWithPercentage && totalExpenses < totalSalaries ? (
           usersWithPercentage.map((user) => (
             <div
-              className="w-full flex items-center justify-around my-1"
+              className="w-full flex items-center justify-around my-1 "
               key={user.id}
             >
               <p>

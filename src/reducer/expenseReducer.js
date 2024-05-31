@@ -15,12 +15,27 @@ export const expenseReducer = (state, action) => {
             ];
             updateExpenseLocalStorage(state)
             return state;
+        case 'EDIT_EXPENSE':
+            console.log(state)
+            state = state.map(expense => {
+                if(expense.id === action.payload.id){
+                    return {
+                        id: expense.id,
+                        ...action.payload.expense
+                    }
+                }
+                return expense;
+            });
+            updateExpenseLocalStorage(state)
+            return state;    
         case 'DELETE_EXPENSE':
             state = state.filter(expense => expense.id !== action.payload);
             updateExpenseLocalStorage(state)
           return state;
         case 'DELETE_ALL_EXPENSES':
-          return expenseInitialState;
+            state = [];
+            updateExpenseLocalStorage(state)
+            return state;
         default: 
           return state;
       }

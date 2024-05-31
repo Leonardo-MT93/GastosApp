@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 // import { AppContext } from "../context/AppContext";
 import { UserContext } from "../context/UserContext";
 
@@ -9,6 +9,7 @@ const UsersFormPage = () => {
   const [alert, setAlert] = useState(false);
   const [error, setError] = useState(false);
 
+  const userInputRef = useRef();
   const onSubmit = (e) => {
     e.preventDefault();
     if(!name || !salary) return setError(true);
@@ -24,6 +25,8 @@ const UsersFormPage = () => {
     setTimeout(() => {
       setAlert(false);
     }, 1000);
+
+    userInputRef.current.focus();
   };
 
   return (
@@ -38,6 +41,7 @@ const UsersFormPage = () => {
             Usuario {users.length + 1}
           </label>
           <input
+          ref={userInputRef}
             className="bg-zinc-600 text-white px-3 py-2 rounded-xl w-[15vw]  mx-2"
             type="text"
             placeholder="Ingresa el nombre de usuario"

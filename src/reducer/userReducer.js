@@ -20,7 +20,9 @@ export const userReducer = (state, action) => {
             updateUserLocalStorage(state)
           return state;
         case 'DELETE_ALL_USERS':
-          return userInitialState;
+          state = [];
+            updateUserLocalStorage(state);
+            return state;
         default: 
           return state;
       }

@@ -27,15 +27,22 @@ function useExpenseReducer(){
         });
     }
 
-    return {state, addExpense, deleteExpense, deleteAllExpenses};    
+    const editExpense = (id, expense) => {
+        dispatch({
+            type: "EDIT_EXPENSE",
+            payload: {id, expense},
+        });
+    }
+
+    return {state, addExpense, deleteExpense, deleteAllExpenses, editExpense};    
 
 }
 export function ExpenseProvider({ children }) {
 
 
-    const { state, addExpense, deleteAllExpenses, deleteExpense} = useExpenseReducer();
+    const { state, addExpense, deleteAllExpenses, deleteExpense, editExpense} = useExpenseReducer();
   return (
-    <ExpenseContext.Provider value={{ expenses: state, addExpense, deleteAllExpenses, deleteExpense}}>
+    <ExpenseContext.Provider value={{ expenses: state, addExpense, deleteAllExpenses, deleteExpense, editExpense}}>
       {children}
     </ExpenseContext.Provider>
   );
